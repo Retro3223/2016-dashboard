@@ -62,6 +62,7 @@ var maxSize = 10;
 
 $(document).ready(function(){
 	console.info("hell otaco!");
+        setInterval(chartRefresh, 200);
 	// sets a function that will be called when the websocket connects/disconnects
 	NetworkTables.addWsConnectionListener(onNetworkTablesConnection, true);
 	
@@ -98,6 +99,12 @@ function onNetworkTablesConnection(connected) {
 	}
 }
 
+function chartRefresh() {
+    chart.load ({
+        columns:[data]
+    });
+}
+
 function onValueChanged(key, value, isNew) {
 
 	// key thing here: we're using the various NetworkTable keys as
@@ -119,20 +126,17 @@ function onValueChanged(key, value, isNew) {
 		// selector. This should work for class names also, not just for ids
 		$('#' + NetworkTables.keySelector(key)).text(value);
 
-if (key=== "/SmartDashboard/y"){
-			//data.push (value);
-			var c = data.shift();
-			data.unshift(value);
-			data.unshift(c);
-			if (data.length >= maxSize){			
-				data.pop();
-			}
-			chart.load ({
-			columns:[data]});
-			if(data.length % 100 === 0) {
-				console.info("data: ", data);
-			}
-		}
+            if (key=== "/SmartDashboard/theta"){
+                var c = data.shift();
+                data.unshift(value);
+                data.unshift(c);
+                if (data.length >= maxSize){			
+                        data.pop();
+                }
+                if(data.length % 100 === 0) {
+                        //console.info("data: ", data);
+                }
+            }
 	}
 }
 
