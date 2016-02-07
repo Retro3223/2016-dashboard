@@ -1,9 +1,39 @@
 .camera {
     width: 320px;
     height: 240px;
+    border: solid 2px black;
+    margin: 10px;
 }
 
 .camera img {
     width: 320px;
     height: 240px;
+}
+.alt-camera {
+    width: 160px;
+    height: 120px;
+    border: solid 2px black;
+    margin: 10px;
+}
+.alt-camera img {
+    width:160px;
+    height: 120px;
+}
+.auto-option {
+	height: 120px;
+	display: block;
+}
+.auto-option label {
+	padding-top: 40px;
+}
+.auto-option img {
+	width:160px;
+	height:120px;
+}
+.selected-option {
+	background-color:red;
+}
+.btn-size {
+    width: 100%;
+    margin-top:10px;
 }
