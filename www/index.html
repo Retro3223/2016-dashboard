@@ -20,6 +20,7 @@
 <script src="/js/bootstrap.js" type="text/javascript"></script>
 <script src="/js/stuff.js" type="text/javascript"></script>
 <script src="/js/cameras.js" type="text/javascript"></script>
+<script src="/js/params.js" type="text/javascript"></script>
 
 <div id='Main' style="margin: 10px">
     <ul id='tabs' class="nav nav-tabs" role="tablist">
@@ -28,6 +29,9 @@
         </li>
         <li role="presentation">
             <a href="#auto">Auto</a>
+        </li>
+        <li role="presentation"> 
+            <a href="#params">Parameters</a>
         </li>
         <li role="presentation">
             <a href="#other">Scratch space</a>
@@ -40,31 +44,53 @@
                     <div class="col-md-4">
                         <div class="row">       
                             <div id="webcam0_stream" class="camera">
-                                <img src="/img/indianfront.png"/>
+                                <img class='no-signal' src="/img/indianfront.png"/>
+                                <img class='signal' />
                             </div>
                         </div>
                         <div class="row">
-                        Camera:
-                            <button class="btn btn-warning">
-                                Front
-                            </button>
-                            Drive
-                            <button class="btn btn-success">
-                                ??
-                            </button>        
+                            <div class='col-md-7'>
+                                Camera:
+                                <select id='leftFrameCamera'>
+                                    <option value="front">Front</option>
+                                    <option value="back">Back</option>
+                                    <option value="structure">Structure</option>
+                                </select>
+                            </div>
+                            <!--
+                            <div class='col-md-2'>
+                                Drive
+                                <button class="btn btn-success">
+                                    ??
+                                </button>        
+                            </div>
+                            -->
                         </div>
                             
                     </div>                   
                     <div class="col-md-5">
-                        <div id="webcam1_stream" class="camera">
-                            <img src="/img/indianback.png"/>
+                        <div class="row">
+                            <div id="webcam1_stream" class="camera">
+                                <img class='no-signal' src="/img/indianback.png"/>
+                                <img class='signal' />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='col-md-7'>
+                                Camera:
+                                <select id='rightFrameCamera'>
+                                    <option value="front">Front</option>
+                                    <option value="back">Back</option>
+                                    <option value="structure">Structure</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-2">
                         <button class="btn btn-primary btn-lg btn-size">
                             Spit
                         </button>
-                        <button class="btn btn-primary btn-lg btn-size">
+                        <button id="SuckerBtn" class="btn btn-primary btn-lg btn-size">
                             Suck
                         </button>
                      </div>
@@ -149,6 +175,42 @@
             	</div>
             </label>
         </div>
+        <div role="tabpanel" class="tab-pane" id="params">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th style="width:40%"></th>
+                        <th style="width:30%"></th>
+                        <th style="width:30%"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Arm pitch up speed:</td>
+                    <td>
+                        <input id="arm_pitch_up_speed" type="text"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Arm pitch down speed:</td>
+                    <td>
+                        <input id="arm_pitch_down_speed" type="text"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Arm roller out speed:</td>
+                    <td>
+                        <input id="arm_roller_out_speed" type="text"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Arm roller in speed:</td>
+                    <td>
+                        <input id="arm_roller_in_speed" type="text"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
         <div role="tabpanel" class="tab-pane" id="other">
             <div>
                 NetworkTables websocket: <span id="connectstate">Unknown state</span><br/>
@@ -172,19 +234,6 @@ var chart;
 var data = ['y'];
 var dataChanged = false;
 var maxSize = 100;
-var frontCamera = {
-	stream: "http://roborio-3223-frc:5800/?action=stream",
-	test: "http://roborio-3223-frc:5800/?action=static",
-	noSignal: "/img/indianfront.png",
-	selector: "#webcam0_stream img"
-};
-
-var altCamera = {
-	stream: "http://roborio-3223-frc:5801/?action=stream",
-	test: "http://roborio-3223-frc:5801/?action=static",
-	noSignal: "/img/indianback.png",
-	selector: "#webcam1_stream img"
-};
 
 $(document).ready(function() {
 	$(".auto-option input").change(function() {
@@ -212,31 +261,16 @@ function setupChart() {
 
 
 function onRobotConnection(connected) {
-	$('#robotstate').text(connected ? "Connected!" : "Disconnected");
+    $('#robotstate').text(connected ? "Connected!" : "Disconnected");
 }
 
 function onNetworkTablesConnection(connected) {
-	var cameras = [frontCamera, altCamera];
-	cameras.forEach(function(camera) {
-		var img = $(camera.selector);
-		if(connected) {
-			img.attr('src', camera.stream);
-		}else {
-			img.attr('src', camera.noSignal);
-		}
-	});
-	
-	if (connected) {
-		$("#connectstate").text("Connected!");
-		
-		// clear the table
-		$("#nt tbody > tr").remove();
-		
-		
-		
-	} else {
-		$("#connectstate").text("Disconnected!");
-	}
+    if (connected) {
+            $("#connectstate").text("Connected!");
+            $("#nt tbody > tr").remove();
+    } else {
+        $("#connectstate").text("Disconnected!");
+    }
 }
 
 function chartRefresh() {
@@ -278,6 +312,7 @@ function onValueChanged(key, value, isNew) {
                         data.pop();
                 }
             }
+
 	}
 }
 
