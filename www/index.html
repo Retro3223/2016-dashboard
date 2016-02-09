@@ -35,13 +35,12 @@
     </ul>
     <div id="Content" class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="teleop">
-            Teleop!
             <div class="container">
                 <div class="row">
-                    <div class="col-md-5">
+                    <div class="col-md-4">
                         <div class="row">       
                             <div id="webcam0_stream" class="camera">
-                                <img src="http://roborio-3223-frc:5800/?action=stream"/>
+                                <img src="/img/indianfront.png"/>
                             </div>
                         </div>
                         <div class="row">
@@ -56,9 +55,9 @@
                         </div>
                             
                     </div>                   
-                    <div class="col-md-4">
-                        <div id="webcam1_stream" class="alt-camera">
-                            <img src="http://roborio-3223-frc:5801/?action=stream"/>
+                    <div class="col-md-5">
+                        <div id="webcam1_stream" class="camera">
+                            <img src="/img/indianback.png"/>
                         </div>
                     </div>
                     <div class="col-md-2">
@@ -71,13 +70,34 @@
                      </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <button class="btn btn-danger btn-lg btn-size">
                             Low Bar
                         </button>
                         <button class="btn btn-danger btn-lg btn-size">
                             Rock Wall
                         </button>
+                    </div>
+                    <div class="col-md-3">
+                    		<button class="btn btn-danger btn-lg btn-size">
+                            Rough Terrain
+                        </button>
+                        <button class="btn btn-danger btn-lg btn-size">
+                            Chili Fries
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                    		<button class="btn btn-danger btn-lg btn-size">
+                            Moat
+                        </button>
+                        <button class="btn btn-danger btn-lg btn-size">
+                            Portcullis
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                    		<button class="btn btn-danger btn-lg btn-size">
+                    			 Rampart
+                    		</button>
                     </div>
                 </div>            
              </div>   
@@ -152,6 +172,19 @@ var chart;
 var data = ['y'];
 var dataChanged = false;
 var maxSize = 100;
+var frontCamera = {
+	stream: "http://roborio-3223-frc:5800/?action=stream",
+	test: "http://roborio-3223-frc:5800/?action=static",
+	noSignal: "/img/indianfront.png",
+	selector: "#webcam0_stream img"
+};
+
+var altCamera = {
+	stream: "http://roborio-3223-frc:5801/?action=stream",
+	test: "http://roborio-3223-frc:5801/?action=static",
+	noSignal: "/img/indianback.png",
+	selector: "#webcam1_stream img"
+};
 
 $(document).ready(function() {
 	$(".auto-option input").change(function() {
@@ -183,12 +216,23 @@ function onRobotConnection(connected) {
 }
 
 function onNetworkTablesConnection(connected) {
-
+	var cameras = [frontCamera, altCamera];
+	cameras.forEach(function(camera) {
+		var img = $(camera.selector);
+		if(connected) {
+			img.attr('src', camera.stream);
+		}else {
+			img.attr('src', camera.noSignal);
+		}
+	});
+	
 	if (connected) {
 		$("#connectstate").text("Connected!");
 		
 		// clear the table
 		$("#nt tbody > tr").remove();
+		
+		
 		
 	} else {
 		$("#connectstate").text("Disconnected!");
