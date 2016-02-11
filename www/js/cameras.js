@@ -76,7 +76,7 @@ var structureCamera = {
 
 $(function() {
     frameL.setCamera(frontCamera);
-    frameR.setCamera(structureCamera);
+    frameR.setCamera(altCamera);
 });
 
 

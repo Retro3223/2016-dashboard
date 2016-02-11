@@ -24,10 +24,10 @@
 
 <div id='Main' style="margin: 10px">
     <ul id='tabs' class="nav nav-tabs" role="tablist">
-        <li role="presentation"  class="active">
+        <li role="presentation">
             <a href="#teleop">Teleop</a>
         </li>
-        <li role="presentation">
+        <li role="presentation" class="active">
             <a href="#auto">Auto</a>
         </li>
         <li role="presentation"> 
@@ -38,7 +38,7 @@
         </li>
     </ul>
     <div id="Content" class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="teleop">
+        <div role="tabpanel" class="tab-pane" id="teleop">
             <div class="container">
                 <div class="row">
                     <div class="col-md-4">
@@ -128,7 +128,7 @@
                 </div>            
              </div>   
         </div>
-        <div role="tabpanel" class="tab-pane" id="auto">
+        <div role="tabpanel" class="tab-pane active"  id="auto">
             <label class="auto-option">
             	<label>
             	 <input type="radio" name="autochoice" value="lowbar"/>
@@ -243,10 +243,50 @@ $(document).ready(function() {
                 .parents()
                 .filter(".auto-option")
                 .addClass("selected-option");
+       var autonomousMode = $(this).val();
+       console.info("auto: ", autonomousMode);
+       NetworkTables.putValue("/SmartDashboard/autonomousmode", autonomousMode); 
 	});
 
         setupNetworkTables();
+        
+   $("#SuckerBtn").click(function() {
+   	
+   });
+   
+   $("#rightFrameCamera").change(function(){
+   	var value = $("#rightFrameCamera").val();
+   	if (value == "front") {
+            frameR.setCamera(frontCamera);
+   	} else if (value == "back") {
+            frameR.setCamera(altCamera);
+   	} else if (value == "structure") {
+            frameR.setCamera(structureCamera);
+   	}
+   	
+   });
+   
+   $("#leftFrameCamera").change(function(){
+   	var value = $("#leftFrameCamera").val();
+   	if (value == "front") {
+            frameL.setCamera(frontCamera);
+   	} else if (value == "back") {
+            frameL.setCamera(altCamera);
+   	} else if (value == "structure") {
+            frameL.setCamera(structureCamera);  	
+   	}
+   	
+   });
 });
+
+function autonomousOver() {
+	$("#tabs>li").removeClass("active");
+	$("#tabs>li:nth-child(1)").addClass("active");
+	
+	$("#Content>div").removeClass("active");
+	$("#Content>#teleop").addClass("active");
+	
+}
 
 function setupNetworkTables() {
     NetworkTables.addWsConnectionListener(onNetworkTablesConnection, true);
@@ -313,6 +353,10 @@ function onValueChanged(key, value, isNew) {
                 }
             }
 
+	}
+	
+	if (key === "/SmartDashboard/autonomousOver") {
+		autonomousOver();	
 	}
 }
 
