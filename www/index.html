@@ -88,13 +88,19 @@
                     </div>
                     <div class="col-md-2">
                         <button class="btn btn-primary btn-lg btn-size">
-                            Spit
+                            Shoot
                         </button>
                         <button id="SuckerBtn" class="btn btn-primary btn-lg btn-size">
-                            Suck
+                            Slurp
                         </button>
+                        <div id='Compass' class='compass'>
+                            <img class='windrose' src='/img/windrose.svg' />
+                            <img class='arrow' src='/img/arrow.svg' />
+                            <span id='CompassDisplay' class='display'></span>
+                        </div>
                      </div>
                 </div>
+
                 <div class="row">
                     <div class="col-md-3">
                         <button class="btn btn-danger btn-lg btn-size">
@@ -209,6 +215,24 @@
                         <input id="arm_roller_in_speed" type="text"/>
                     </td>
                 </tr>
+                <tr>
+                    <td>Desired heading:</td>
+                    <td>
+                        <input id="desired_heading" type="text"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Rotate velocity:</td>
+                    <td>
+                        <input id="rotate_velocity" type="text"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Rotate mode:</td>
+                    <td>
+                        <input id="rotate_mode" type="text"/>
+                    </td>
+                </tr>
             </table>
         </div>
         <div role="tabpanel" class="tab-pane" id="other">
@@ -233,7 +257,7 @@
 var chart;
 var data = ['y'];
 var dataChanged = false;
-var maxSize = 100;
+var maxSize = 1000 / 20 * 30;
 
 $(document).ready(function() {
 	$(".auto-option input").change(function() {
@@ -249,6 +273,7 @@ $(document).ready(function() {
 	});
 
         setupNetworkTables();
+        //setupChart();
         
    $("#SuckerBtn").click(function() {
    	
@@ -343,7 +368,7 @@ function onValueChanged(key, value, isNew) {
 		// selector. This should work for class names also, not just for ids
 		$('#' + NetworkTables.keySelector(key)).text(value);
 
-            if (key=== "/SmartDashboard/theta"){
+            if (key=== "/SmartDashboard/angle"){
                 dataChanged = true;
                 var c = data.shift();
                 data.unshift(value);
@@ -351,6 +376,8 @@ function onValueChanged(key, value, isNew) {
                 if (data.length >= maxSize){			
                         data.pop();
                 }
+                $("#Compass .arrow").css("transform", "rotate(" + value + "deg)");
+                $("#CompassDisplay").text(value + " degrees");
             }
 
 	}

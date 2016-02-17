@@ -35,3 +35,23 @@
     width: 100%;
     margin-top:10px;
 }
+
+.compass .windrose {
+    position: absolute; 
+    z-index: 1; 
+}
+
+.compass .arrow {
+    position: absolute; 
+    transform-origin: 50% 57%;
+    z-index: 2;
+}
+.compass .display {
+    position: absolute; 
+    z-index: 2;
+    top: 250px;
+    left: 150px;
+    width: 200px;
+    height: 30px;
+}
+

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="160" height="190">
+
+<g id="windrose">
+  <path id="tips" d="M 80 30 100 90 160 110 100 130 80 190 60 130 0 110 60 90 80 30" style="stroke:none;stroke-width:0;fill:#80b3cd"/>
+
+  <ellipse id="circle" cx="80" cy="110" rx="60" ry="60" style="stroke:none;stroke-width:0;fill:#80b3cd"/>
+</g>
+
+</svg>

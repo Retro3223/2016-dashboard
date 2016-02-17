@@ -1,11 +1,36 @@
 
-var param_vals = {
-    arm_pitch_down_speed: 0.25,
-    arm_pitch_up_speed: 0.25,
-    arm_roller_out_speed: 0.25,
-    arm_roller_in_speed: 0.25
+var param_specs = {
+    arm_pitch_down_speed: {
+        defaultVal: 0.25,
+        type: "double"
+    },
+    arm_pitch_up_speed: {
+        defaultVal: 0.25,
+        type: "double"
+    },
+    arm_roller_out_speed: {
+        defaultVal: 0.25,
+        type: "double"
+    },
+    arm_roller_in_speed: {
+        defaultVal: 0.25,
+        type: "double"
+    },
+    desired_heading: {
+        defaultVal: 0.0,
+        type: "double"
+    },
+    rotate_velocity: {
+        defaultVal: 0.0,
+        type: "double"
+    },
+    rotate_mode: {
+        defaultVal: "simple",
+        type: "string"
+    }
 };
 
+var param_vals = {};
 var param_waiting = {};
 var param_update = {};
 var param_timeouts = {};
@@ -18,12 +43,13 @@ $(function() {
 });
 
 function setupInputs() {
-    for(var propName in param_vals) {
+    for(var propName in param_specs) {
         setupInput(propName);
     }
 }
 
 function setupInput(propName) {
+    param_vals[propName] = param_specs[propName].defaultVal;
     param_waiting[propName] = false;
     param_update[propName] = function() {
         NetworkTables.putValue(
@@ -33,16 +59,28 @@ function setupInput(propName) {
     };
     $("#" + propName).on("input", function() {
         var value = $("#" + propName).val();
-        param_vals[propName] = parseFloat(value);
-        clearTimeout(param_timeouts[propName]);
-        param_waiting[propName] = true;
-        param_timeouts[propName] = setTimeout(
-                param_update[propName], param_input_debounce);
+        var resetTimeout = function() {
+            clearTimeout(param_timeouts[propName]);
+            param_waiting[propName] = true;
+            param_timeouts[propName] = setTimeout(
+                    param_update[propName], param_input_debounce);
+        };
+        if(param_specs[propName].type === "double") {
+            var fval = parseFloat(value);
+            if(!isNaN(fval)) {
+                param_vals[propName] = parseFloat(value);
+                resetTimeout();
+            }
+        }
+        if(param_specs[propName].type === "string") {
+            param_vals[propName] = (value);
+            resetTimeout();
+        }
     });
 }
 
 function onValueChanged_params(key, value, isNew) {
-    for(var propName in param_vals) {
+    for(var propName in param_specs) {
         if(key === '/SmartDashboard/' + propName) {
             var elt = $("#" + propName);
             var pre_next_td = function(_elt) {
