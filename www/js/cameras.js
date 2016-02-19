@@ -74,9 +74,39 @@ var structureCamera = {
     stream: "http://localhost:8080/cam.mjpg",
 };
 
+var nullCamera = {
+    stream: "/img/indianfront.png"
+};
+
 $(function() {
     frameL.setCamera(frontCamera);
     frameR.setCamera(altCamera);
+
+   $("#rightFrameCamera").change(function(){
+   	var value = $("#rightFrameCamera").val();
+   	if (value == "front") {
+            frameR.setCamera(frontCamera);
+   	} else if (value == "back") {
+            frameR.setCamera(altCamera);
+   	} else if (value == "structure") {
+            frameR.setCamera(structureCamera);
+   	}else if(value == "none") {
+            frameR.setCamera(nullCamera);
+        }
+   });
+   
+   $("#leftFrameCamera").change(function(){
+   	var value = $("#leftFrameCamera").val();
+   	if (value == "front") {
+            frameL.setCamera(frontCamera);
+   	} else if (value == "back") {
+            frameL.setCamera(altCamera);
+   	} else if (value == "structure") {
+            frameL.setCamera(structureCamera);  	
+        } else if (value == "none") {
+            frameL.setCamera(nullCamera);
+   	}
+   });
 });
 
 
