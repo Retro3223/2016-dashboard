@@ -37,11 +37,17 @@
         <li role="presentation">
             <a href="#other">Scratch space</a>
         </li>
+		<li role="presentation">
+            <a href="#joysticks">joysticks</a>
+        </li>
     </ul>
     <div id="Content" class="tab-content">
         <div role="tabpanel" class="tab-pane" id="teleop">
             <div class="container">
                 <div class="row">
+					<div class="col-md-1">
+								<img src="/img/minibot.png" class='minibot'/>
+					</div>
                     <div class="col-md-4">
                         <div class="row">       
                             <div id="webcam0_stream" class="camera">
@@ -50,7 +56,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class='col-md-7'>
+							<div class='col-md-7'>
                                 Camera:
                                 <select id='leftFrameCamera'>
                                     <option value="front">Front</option>
@@ -98,7 +104,7 @@
                         </button>
                         <div id='Compass' class='compass'>
                             <img class='windrose' src='/img/windrose.svg' />
-                            <img class='arrow' src='/img/arrow.svg' />
+                            <img class='arrow compasssize' src='/img/dragoncompass.png'/>
                             <span id='CompassDisplay' class='display'></span>
                         </div>
                      </div>
@@ -196,7 +202,10 @@
             		<img src="/img/rockwall.jpg"/>
             	</div>
             </label>
-        </div>
+		</div>	
+        <div role="tabpanel" class="tab-pane"  id="joysticks">
+			<img src="/img/stickofjoy.png"/>
+		</div>
         <div role="tabpanel" class="tab-pane" id="params">
             <table class="table table-striped">
                 <thead>
