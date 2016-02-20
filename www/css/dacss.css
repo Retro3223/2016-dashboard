@@ -62,4 +62,8 @@
 	width: 75px;
 	height: 100px;
 }
-
+.joystick {
+	border:5px double blue;
+	padding:50px;
+	text-align:center;
+}
