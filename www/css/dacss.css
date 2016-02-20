@@ -54,4 +54,12 @@
     width: 200px;
     height: 30px;
 }
+.compasssize {
+	width: 100px;
+	height: 75px;
+}
+.minibot {
+	width: 75px;
+	height: 100px;
+}
 
