@@ -43,20 +43,21 @@
 
 .compass .arrow {
     position: absolute; 
-    transform-origin: 50% 57%;
+    transform-origin: 50% 60%;
     z-index: 2;
 }
 .compass .display {
     position: absolute; 
     z-index: 2;
-    top: 250px;
+    top: 160px;
     left: 150px;
     width: 200px;
     height: 30px;
 }
 .compasssize {
-	width: 100px;
-	height: 75px;
+	width: 160px;
+	height: 200px;
+	top: -9px;
 }
 .minibot {
 	width: 75px;
