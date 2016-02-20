@@ -8,7 +8,7 @@ var param_specs = {
         defaultVal: 0.25,
         type: "double"
     },
-    arm_roller_out_speed: {
+    arm_roller_out_speed: { 
         defaultVal: 0.25,
         type: "double"
     },
