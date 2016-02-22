@@ -177,4 +177,13 @@ function onValueChanged_joystick(key,value,isNew)
 			$("#right_11_label").removeClass("btn-press");
 		}
 	}
+
+        for(var i = 1; i <= 11; i++) {
+            if(key === "/SmartDashboard/right_" + i) {
+                $("#right_" + i).text(value);
+            }
+            if(key === "/SmartDashboard/left_" + i) {
+                $("#left_" + i).text(value);
+            }
+        }
 }
