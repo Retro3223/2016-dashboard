@@ -66,14 +66,7 @@
                                     <option value="none">None</option>
                                 </select>
                             </div>
-                            <!--
-                            <div class='col-md-2'>
-                                Drive
-                                <button class="btn btn-success">
-                                    ??
-                                </button>        
-                            </div>
-                            -->
+                            <span id = "driveMode"></span>
                         </div>
                             
                     </div>                   
@@ -276,7 +269,8 @@
         <div role="tabpanel" class="tab-pane" id="joysticks">
 			<div id="stick_row" class="row">
 				<div id="left_stick" class="joystick col-md-6">
-					<img class="center" src="/img/stickofjoy.png"/>
+					<div class="row"></div>
+					<img id="left_stick_img" class="img-responsive center-block" src="/img/stickofjoy.png"/>
 					<span id= "left_1_container">
 					<span id="left_1_label">Btn1:</span>
 					<span id = "left_1"></span>
@@ -323,7 +317,8 @@
 				</span>
 				</div>
 				<div id="right_stick" class="joystick col-md-6">
-					<img class = "center" src="/img/stickofjoy.png"/>
+					<div class="row"></div>
+					<img id="right_stick_img" class = "img-responsive center-block" src="/img/stickofjoy.png"/>
 					<span id= "right_1_container">	
 						<span id="right_1_label">Btn1</span>
 						<span id = "right_1"></span>
@@ -465,6 +460,11 @@ function onValueChanged(key, value, isNew) {
 	
 	if (key === "/SmartDashboard/autonomousOver") {
 		autonomousOver();	
+	}
+	
+	if (key === "/SmartDashboard/driveMode") {
+		$("#driveMode").text(value);
+	
 	}
 }
 
