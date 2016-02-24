@@ -79,105 +79,113 @@
 }
 #left_1_container {
 	position: absolute;
-	top:50px;
-	left:310px;
+	top:4%;
+	left:54%;
 }
 #left_2_container {
 	position: absolute;
-	top:200px;
-	left:421px;
-	
+	top:25%;
+	left:72%;
 }
 #left_3_container {
 	position: absolute;
-	top: 80px;
-    left: 200px;
+	top: 5%;
+    left: 40%;
 }
 #left_4_container {
 	position: absolute;
-	top: 120px;
+	top: 12%;
+	left: 20%;
 }
 #left_5_container {
 	position: absolute;
-	top: 120px;
-    left: 421px;
+	top: 12%;
+    left: 70%;
 }
 #left_6_container {
 	position: absolute;
-	top:280px;
+	top:40%;
+	left:17%
 }
 #left_7_container {
 	position: absolute;
-	top: 425px;
+	top: 62%;
+	left:18%;
 }
 #left_8_container {
 	position: absolute;
-	    top: 530px;
+	    top: 90%;
+		left:28%;
 }
 #left_9_container {
 	position: absolute;
-	    top: 530px;
-		left:421px;
+	    top: 90%;
+		left:62%;
 }
 #left_10_container {
 	position: absolute;
-	top:435px;
-	left:421px;
+	top:66%;
+	left:72%;
 }
 #left_11_container {
 	position: absolute;
-	top:295px;
-	left:421px;
+	top:42%;
+	left:72%;
+	
 }
 #right_1_container {
 	position: absolute;
-	top:50px;
-	left:310px;
+	top:5%;
+	left:54%;
 }
 #right_2_container {
 	position: absolute;
-	top:200px;
-	left:421px;
+	top:25%;
+	left:72%;
 	
 }
 #right_3_container {
 	position: absolute;
-	top: 80px;
-    left: 200px;
+	top: 5%;
+    left: 40%;
 }
 #right_4_container {
 	position: absolute;
-	top: 120px;
-}
+	top: 12%;
+	left:20%;
+	}
 #right_5_container {
 	position: absolute;
-	top: 120px;
-    left: 421px;
+	top: 12%;
+    left: 70%;
 }
 #right_6_container {
 	position: absolute;
-	top:280px;
+	top:40%;
+	left:17%;
 }
 #right_7_container {
 	position: absolute;
-	top: 425px;
+	top: 62%;
+	left:18%
 }
 #right_8_container {
 	position: absolute;
-	    top: 530px;
+	    top: 90%;
+		left:28%;
 }
 #right_9_container {
 	position: absolute;
-	    top: 530px;
-		left:421px;
+	    top: 90%;
+		left:62%;
 }
 #right_10_container {
 	position: absolute;
-	top:435px;
-	left:421px;
+	top:66%;
+	left:72%;
 }
 #right_11_container {
 	position: absolute;
-	top:295px;
-	left:421px;
+	top:42%;
+	left:72%;
 }
