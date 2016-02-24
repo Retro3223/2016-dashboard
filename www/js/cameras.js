@@ -63,7 +63,7 @@ var frameR = new CameraFrame({
 });
 
 var frontCamera = {
-    stream: "http://roborio-3223-frc:5800/?action=stream",
+    stream: "http://raspberrypi:5800/?action=stream",
 };
 
 var altCamera = {
@@ -71,7 +71,7 @@ var altCamera = {
 };
 
 var structureCamera = {
-    stream: "http://localhost:8080/cam.mjpg",
+    stream: "http://raspberrypi:5802/?action=stream",
 };
 
 var nullCamera = {
