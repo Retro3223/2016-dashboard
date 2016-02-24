@@ -108,9 +108,6 @@ $(function() {
 function setupChart() {
     chart = c3.generate({data:{columns:[data]}});
     setInterval(chartRefresh, 200);
-    setInterval(function() {
-        NetworkTables.putValue("/SmartDashboard/angle", Math.sin(new Date().getTime() / 100));
-    }, 100);
 }
 
 function chartRefresh() {

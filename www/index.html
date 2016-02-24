@@ -477,7 +477,7 @@ function onValueChanged(key, value, isNew) {
 
             if (key=== "/SmartDashboard/angle"){
                 $("#Compass .arrow").css("transform", "rotate(" + value + "deg)");
-                $("#CompassDisplay").text(value + " degrees");
+                $("#CompassDisplay").text(numeral(value).format("0.00") + " degrees");
             }
 
 	}
