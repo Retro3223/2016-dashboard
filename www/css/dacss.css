@@ -77,6 +77,11 @@
 .joystick-spacer {
 	height: 40px;
 }
+.shooterarm {
+	position:absolute;
+	width:90%;
+	top:150px;
+}
 #left_1_container {
 	position: absolute;
 	top:50px;
