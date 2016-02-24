@@ -3345,27 +3345,27 @@ fieldset[disabled] .btn-warning.focus {
   background-color: #fff;
 }
 .btn-danger {
-  color: #fff;
-  background-color: #d9534f;
-  border-color: #d43f3a;
+  color: white;
+  background-color: #cc0066;
+  border-color: #660033;
 }
 .btn-danger:focus,
 .btn-danger.focus {
   color: #fff;
-  background-color: #c9302c;
+  background-color: #009999;
   border-color: #761c19;
 }
 .btn-danger:hover {
-  color: #fff;
-  background-color: #c9302c;
-  border-color: #ac2925;
+  color: white;
+  background-color: #33cccc;
+  border-color: #009999;
 }
 .btn-danger:active,
 .btn-danger.active,
 .open > .dropdown-toggle.btn-danger {
-  color: #fff;
-  background-color: #c9302c;
-  border-color: #ac2925;
+  color: white;
+  background-color: #33cccc;
+  border-color: #009999;
 }
 .btn-danger:active:hover,
 .btn-danger.active:hover,
