@@ -3118,19 +3118,19 @@ fieldset[disabled] .btn-default.focus {
 }
 .btn-primary {
   color: #fff;
-  background-color: #337ab7;
-  border-color: #2e6da4;
+  background-color: #cc0066;
+  border-color: #660033;
 }
 .btn-primary:focus,
 .btn-primary.focus {
-  color: #fff;
-  background-color: #286090;
-  border-color: #122b40;
+  color: white;
+  background-color: #009999;
+  border-color: #761c19;
 }
 .btn-primary:hover {
-  color: #fff;
-  background-color: #286090;
-  border-color: #204d74;
+  color: white;
+  background-color: #33cccc;
+  border-color: #009999;
 }
 .btn-primary:active,
 .btn-primary.active,
@@ -3351,7 +3351,7 @@ fieldset[disabled] .btn-warning.focus {
 }
 .btn-danger:focus,
 .btn-danger.focus {
-  color: #fff;
+  color: white;
   background-color: #009999;
   border-color: #761c19;
 }
