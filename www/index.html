@@ -18,6 +18,7 @@
 
 <script src="/js/jquery-2.1.3.min.js" type="text/javascript"></script>
 <script src="/js/numeral.js" type="text/javascript"></script>
+<script src="/js/moment.js" type="text/javascript"></script>
 <script src="/js/bootstrap.js" type="text/javascript"></script>
 <script src="/js/auto.js" type="text/javascript"></script>
 <script src="/js/stuff.js" type="text/javascript"></script>
@@ -25,6 +26,7 @@
 <script src="/js/params.js" type="text/javascript"></script>
 <script src="/js/joystick.js" type="text/javascript"></script>
 <script src="/js/chart.js" type="text/javascript"></script>
+<script src="/js/record.js" type="text/javascript"></script>
 
 <div id='Main' style="margin: 10px">
     <ul id='tabs' class="nav nav-tabs" role="tablist">
@@ -48,45 +50,58 @@
 		</li>
     </ul>
     <div id="Content" class="tab-content">
-		<div role="tabpanel" class="tab-pane" id="recording">
-			<div class="record-contain">
-				<div class="record-row-1">
-					<button type="button" class="btn btn-primary btn-lg">
-						Prepare To Record					
-					</button>
-					<p class="center">Recording Name</p>
-					<div>
-						<input type="text">
-					</div>
-					<button type="button" class="btn btn-primary btn-lg">
-						Start Recording						
-					</button>
-				</div>
-			</div>
-		</div>
+        <div role="tabpanel" class="tab-pane" id="recording">
+            <div class="record-contain">
+                <div class="record-row-1">
+                    <button id="RecordPrepBtn" type="button" 
+                        class="btn btn-primary btn-lg">
+                        Enter Record Mode 
+                    </button>
+                    <p class="center">Recording Name:</p>
+                    <div>
+                        <input id="RecordNameTxt" type="text">
+                    </div>
+                    <button id="BeginRecordBtn" type="button" 
+                        class="btn btn-primary btn-lg">
+                        Start Recording						
+                    </button>
+                    <p id="RecordClock">
+                    </p>
+                </div>
+            </div>
+        </div>
 		
         <div role="tabpanel" class="tab-pane" id="teleop">
+                <div>
+                    <span id="recordingWarning">
+                        <i class='glyphicon glyphicon-alert'></i>
+                        Robot is in Record Mode. Joystick input will not be received unless you are currently recording.
+                        <br>
+                    </span>
+                </div>
             <div class="container">
                 <div class="row">
-					<div class="col-md-2">
-						<div class="row">
-							<div style="width:100%" class="btn-group-vertical">
-								<button type="button" class="btn btn-primary btn-lg btn-size">
-								Shoot
-								</button>
-								<button id="SuckerBtn" type="button" class="btn btn-primary btn-lg btn-size">
-								Slurp
-								</button>
-							</div>
-						</div>
-						<div class="row">
-							<div id="Compass" class="compass col-md-2">
-								<img class="windrose" src="/img/windrose.svg" />
-								<img class="arrow compasssize" src="/img/dragoncompass.png" />
-								<span id="CompassDisplay" class="display"></span>
-							</div>
-						</div>
-					</div>
+                    <div class="col-md-2">
+                        <div class="row">
+                            <div style="width:100%" class="btn-group-vertical">
+                                <button type="button" 
+                                    class="btn btn-primary btn-lg btn-size">
+                                    Shoot
+                                    </button>
+                                    <button id="SuckerBtn" type="button" 
+                                        class="btn btn-primary btn-lg btn-size">
+                                    Slurp
+                                    </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div id="Compass" class="compass col-md-2">
+                                <img class="windrose" src="/img/windrose.svg" />
+                                <img class="arrow compasssize" src="/img/dragoncompass.png" />
+                                <span id="CompassDisplay" class="display"></span>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-md-4">
                         <div class="row">       
                             <div id="webcam0_stream" class="camera">
