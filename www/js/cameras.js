@@ -3,27 +3,27 @@ function CameraFrame(obj) {
     this.selector = obj.selector;
     this.noSignal = obj.noSignal;
     this.lastLoaded = 0;
-    this.state = "no-signal"
+    this.state = "no-signal";
+    this.imageNr = 0;
+    this.finished = [];
+    this.lastTried = Date.now();
     this.camera = null;
-    var that = this;
+    var frame = this;
 
     $(function() {
-        that.hideStream();
-        that.getSignalImg().on("load", function() {
-            that.lastLoaded = Date.now();
-            that.state = "signal";
-            that.showStream();
-        });
+        frame.hideStream();
         setInterval(function() {
             var now = Date.now();
-            if (that.state === "signal" && (now - that.lastLoaded) >= 5000) {
-                that.state = "no-signal";
-                that.hideStream();
+            if (frame.state === "signal" && (now - frame.lastLoaded) >= 5000 && !frame.camera.singleImage) {
+                frame.state = "no-signal";
+                frame.hideStream();
             }
-            if (that.state === "no-signal" && 
-                    (now - that.lastLoaded) >= 10000) {
-                // todo: think of a way to reconnect
-
+            if (frame.state === "no-signal" && 
+                    (now - frame.lastTried) >= 5000 &&
+                frame.camera != null &&
+                !frame.camera.singleImage) {
+                frame.lastTried = Date.now();
+                frame.createImageLayer();
             }
         }, 1000);
     });
@@ -40,16 +40,65 @@ CameraFrame.prototype.getNoSignalImg = function() {
 CameraFrame.prototype.showStream = function() {
     this.getSignalImg().show();
     this.getNoSignalImg().hide();
-}
+};
 
 CameraFrame.prototype.hideStream = function() {
     this.getSignalImg().hide();
     this.getNoSignalImg().show();
-}
+};
+
+CameraFrame.prototype.clear = function() {
+    this.getSignalImg().remove();
+    this.finished = [];
+};
 
 CameraFrame.prototype.setCamera = function(camera) {
     this.camera = camera;
-    this.getSignalImg().attr("src", this.camera.stream);
+    this.clear();
+    this.showStream();
+    this.createImageLayer();
+}
+
+CameraFrame.prototype.createImageLayer = function() {
+    var frame = this;
+    var img = new Image();
+    img.style.zIndex = -1;
+    img.onload = function() {
+        frame.showStream();
+        frame.imageOnload(this);
+    };
+    img.onerror = function() {
+        frame.hideStream();
+    }
+    img.src = this.camera.url + "&n=" + (++this.imageNr);
+    $(img).addClass("signal")
+    var webcam = $(this.selector);
+    webcam.get(0).insertBefore(img, webcam.firstChild);
+};
+
+CameraFrame.prototype.imageOnload = function(img) {
+    var frame = this;
+    frame.showStream();
+    frame.lastLoaded = Date.now();
+    frame.state = "signal";
+    img.style.zIndex = frame.imageNr;
+    while (1 < frame.finished.length) {
+        var del = frame.finished.shift();
+        del.parentNode.removeChild(del);
+    }
+    frame.finished.push(img);
+    if(!frame.paused && !frame.camera.singleImage) {
+        setTimeout(function() {
+            frame.createImageLayer();
+        }, 100);
+    }
+};
+
+function Camera(args) {
+    this.url = args.url;
+    this.singleImage = args.singleImage;
+    this.elt = $("#" + this.eltId);
+    this.elt.html("<noscript><img src='" + this.url + "'/></noscript>");
 }
 
 var frameL = new CameraFrame({
@@ -62,25 +111,33 @@ var frameR = new CameraFrame({
     noSignal: "/img/indianback.png",
 });
 
-var frontCamera = {
-    stream: "http://raspberrypi:5800/?action=stream",
-};
+var frontCamera = new Camera({
+    url: "http://raspberrypi:5800/?action=snapshot",
+    singleImage: false
+});
 
-var altCamera = {
-    stream: "http://roborio-3223-frc:5801/?action=stream",
-};
+var altCamera = new Camera({
+    url: "http://roborio-3223-frc:5801/?action=snapshot",
+    singleImage: false
+});
 
-var structureCamera = {
-    stream: "http://raspberrypi:5802/?action=stream",
-};
+var structureCamera = new Camera({
+    url: "http://raspberrypi:5802/?action=snapshot",
+    singleImage: false
+});
 
-var nullCamera = {
-    stream: "/img/indianfront.png"
-};
+var nullCamera = new Camera({
+    url: "/img/indianfront.png?",
+    singleImage: true
+});
+
+var structureMode = 5;
 
 $(function() {
     frameL.setCamera(frontCamera);
     frameR.setCamera(altCamera);
+    $("#rightStructureModeContainer").hide();
+    $("#leftStructureModeContainer").hide();
 
    $("#rightFrameCamera").change(function(){
    	var value = $("#rightFrameCamera").val();
@@ -92,6 +149,12 @@ $(function() {
             frameR.setCamera(structureCamera);
    	}else if(value == "none") {
             frameR.setCamera(nullCamera);
+        }
+
+        if(value == "structure") {
+            $("#rightStructureModeContainer").show();
+        }else{
+            $("#rightStructureModeContainer").hide();
         }
    });
    
@@ -106,62 +169,28 @@ $(function() {
         } else if (value == "none") {
             frameL.setCamera(nullCamera);
    	}
+
+        if(value == "structure") {
+            $("#leftStructureModeContainer").show();
+        }else{
+            $("#leftStructureModeContainer").hide();
+        }
+   });
+
+   $("#leftStructureMode").change(function() {
+       var value = parseInt($("#leftStructureMode").val());
+       if(!isNaN(value)) {
+           structureMode = value;
+       }
+       NetworkTables.putValue("/SmartDashboard/structureMode", structureMode);
+   });
+   $("#rightStructureMode").change(function() {
+       var value = parseInt($("#rightStructureMode").val());
+       if(!isNaN(value)) {
+           structureMode = value;
+       }
+       NetworkTables.putValue("/SmartDashboard/structureMode", structureMode);
    });
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-function Camera(i) {
-    this.paused = false;
-    this.port = 5800 + i;
-    this.url = "http://roborio-3223-frc:" + this.port + "/?action=snapshot";
-    this.eltId = "webcam" + i;
-    this.imageNr = 0;
-    this.finished = [];
-    this.elt = $("#" + this.eltId);
-    this.elt.html("<noscript><img src='" + this.url + "'/></noscript>");
-}
-
-Camera.prototype.createImageLayer = function() {
-    var that = this;
-    var img = new Image();
-    img.style.position = "absolute";
-    img.style.zIndex = -1;
-    img.onload = function() {
-        that.imageOnload(this);
-    };
-    img.onclick = function() {
-        that.imageOnclick(this);
-    };
-    img.src = this.url + "&n=" + (++this.imageNr);
-    var webcam = document.getElementById(this.eltId);
-    webcam.insertBefore(img, webcam.firstChild);
-};
-
-Camera.prototype.imageOnload = function(img) {
-    img.style.zIndex = this.imageNr;
-    while (1 < this.finished.length) {
-        var del = this.finished.shift();
-        del.parentNode.removeChild(del);
-    }
-    this.finished.push(img);
-    if(!this.paused) {
-        this.createImageLayer();
-    }
-};
-
-Camera.prototype.imageOnclick = function() {
-    this.paused = !this.paused;
-    if(!this.paused) this.createImageLayer();
-}
 

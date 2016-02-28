@@ -75,11 +75,20 @@
                 <div>
                     <span id="recordingWarning">
                         <i class='glyphicon glyphicon-alert'></i>
-                        Robot is in Record Mode. Joystick input will not be received unless you are currently recording.
+                        Robot is in Record Mode. Joystick input will be disabled unless you are currently recording.
                         <br>
                     </span>
+                    <span class="connection-warning">
+                        <i class='glyphicon glyphicon-alert'></i>
+                        Dashboard not connected. 
+                        <br>
+                    </span>
+                    <span class="robot-connection-warning">
+                        <i class='glyphicon glyphicon-alert'></i>
+                        Robot not connected. 
+                    </span>
                 </div>
-            <div class="container">
+            <div class="notcontainer">
                 <div class="row">
                     <div class="col-md-2">
                         <div class="row">
@@ -106,11 +115,10 @@
                         <div class="row">       
                             <div id="webcam0_stream" class="camera">
                                 <img class='no-signal' src="/img/indianback.png"/>
-                                <img class='signal' />
                             </div>
                         </div>
                         <div class="row">
-							<div class='col-md-7'>
+                            <div class='col-md-12'>
                                 Camera:
                                 <select id='leftFrameCamera'>
                                     <option value="front">Front</option>
@@ -118,6 +126,15 @@
                                     <option value="structure">Structure</option>
                                     <option value="none">None</option>
                                 </select>
+                                <span id="leftStructureModeContainer">
+                                    Structure Mode:
+                                    <select id='leftStructureMode'>
+                                        <option value="0">Raw Distance</option>
+                                        <option value="1">Raw IR</option>
+                                        <option value="2">Target Mask</option>
+                                        <option value="5" selected>Targets</option>
+                                    </select>
+                                </span>
                             </div>
                             <span id = "driveMode"></span>
                         </div>
@@ -127,11 +144,10 @@
                         <div class="row">
                             <div id="webcam1_stream" class="camera">
                                 <img class='no-signal' src="/img/indianback.png"/>
-                                <img class='signal' />
                             </div>
                         </div>
                         <div class="row">
-                            <div class='col-md-7'>
+                            <div class='col-md-12'>
                                 Camera:
                                 <select id='rightFrameCamera'>
                                     <option value="front">Front</option>
@@ -139,6 +155,15 @@
                                     <option value="structure">Structure</option>
                                     <option value="none">None</option>
                                 </select>
+                                <span id="rightStructureModeContainer">
+                                    Structure Mode:
+                                    <select id='rightStructureMode'>
+                                        <option value="0">Raw Distance</option>
+                                        <option value="1">Raw IR</option>
+                                        <option value="2">Target Mask</option>
+                                        <option value="5" selected>Targets</option>
+                                    </select>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -201,13 +226,13 @@
         </div>
         <div role="tabpanel" class="tab-pane active"  id="auto">
             <div>
-                <span id="autoConnectionWarning">
+                <span class="connection-warning">
                     <i class='glyphicon glyphicon-alert'></i>
                     Websocket not connected. Robot's autonomous mode may be 
                     different than what is shown below.
                     <br>
                 </span>
-                <span id="autoRobotConnectionWarning">
+                <span class="robot-connection-warning">
                     <i class='glyphicon glyphicon-alert'></i>
                     Robot not connected. Robot's autonomous mode may be 
                     different than what is shown below.
@@ -502,14 +527,21 @@ function setupNetworkTables() {
 
 function onRobotConnection(connected) {
     $('#robotstate').text(connected ? "Connected!" : "Disconnected");
+    if(connected) {
+        $(".robot-connection-warning").hide();
+    }else{
+        $(".robot-connection-warning").show();
+    }
 }
 
 function onNetworkTablesConnection(connected) {
     if (connected) {
-            $("#connectstate").text("Connected!");
-            $("#nt tbody > tr").remove();
+        $("#connectstate").text("Connected!");
+        $("#nt tbody > tr").remove();
+        $(".connection-warning").hide();
     } else {
         $("#connectstate").text("Disconnected!");
+        $(".connection-warning").show();
     }
 }
 

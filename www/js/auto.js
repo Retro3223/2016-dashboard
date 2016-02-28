@@ -22,11 +22,6 @@ $(function() {
 function autoWebSocketConnectionListener(connected) {
     websocketConnected = connected;
     console.info("websocket connection", connected);
-    if (connected) {
-        $("#autoConnectionWarning").hide();
-    }else{
-        $("#autoConnectionWarning").show();
-    }
 }
 
 function showSelectedAutonomousOption() {
@@ -59,9 +54,6 @@ function sendAutonomousMode() {
 function autoRobotConnectionListener(connected) {
     if(connected) {
         sendAutonomousMode();
-        $("#autoRobotConnectionWarning").hide();
-    }else{
-        $("#autoRobotConnectionWarning").show();
     }
 }
 
