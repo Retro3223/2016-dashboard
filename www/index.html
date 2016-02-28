@@ -168,22 +168,36 @@
 						</div> 
                     </div>
                 </div>           
-				<div class="row">
-					<div class="col-md-3">
-						<div class="row">
-							Shooter Position:
-							<select id="shooterArmPitch">
-								<option value="bottom">Bottom</option>
-								<option value="pos1">Position 1</option>
-								<option value="pos2">Position 2</option>
-							</select>
-						</div>
-						<div class="row">
-							<img class="shooterarm" src="/img/shooterarm.png" />
-						</div>
-					</div>
-				</div>
-			</div>   
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="row">
+                            Shooter Position:
+                            <select id="shooterArmPitch">
+                                <option value="none" selected>Driver Controlled</option>
+                                <option value="bottom">Bottom</option>
+                                <option value="pos1">Position 1</option>
+                                <option value="pos2">Position 2</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <img id='daShooterArm' class="shooterarm" src="/img/shooterarm.png" />
+                            <span id='daShooterArmDisplay'></span>
+                        </div>
+                    </div>
+                    <!--
+                    <div class='md-col-5'>
+                        <table>
+                            <tr>
+                                <td>shooter pitch:</td>
+                                <td>
+                                    <input id="shooter_pitch" type="text"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    -->
+                </div>
+            </div>   
         </div>
         <div role="tabpanel" class="tab-pane active"  id="auto">
             <div>
@@ -513,6 +527,10 @@ function onValueChanged(key, value, isNew) {
             if (key=== "/SmartDashboard/angle"){
                 $("#Compass .arrow").css("transform", "rotate(" + value + "deg)");
                 $("#CompassDisplay").text(numeral(value).format("0.00") + " degrees");
+            }
+            if (key === "/SmartDashboard/shooter_pitch") {
+                $("#daShooterArm").css("transform", "rotate(" + (-value) + "deg)");
+                $("#daShooterArmDisplay").text(numeral(value).format("0.00") + " degrees");
             }
 
 	}

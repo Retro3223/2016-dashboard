@@ -1,5 +1,9 @@
 
 var param_specs = {
+    shooter_pitch: {
+        defaultVal: 1,
+        type: "double"
+    },
     arm_pitch_down_speed: {
         defaultVal: 0.25,
         type: "double"
