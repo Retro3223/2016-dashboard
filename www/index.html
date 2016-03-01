@@ -50,26 +50,37 @@
 		</li>
     </ul>
     <div id="Content" class="tab-content">
-        <div role="tabpanel" class="tab-pane" id="recording">
-            <div class="record-contain">
-                <div class="record-row-1">
-                    <button id="RecordPrepBtn" type="button" 
-                        class="btn btn-primary btn-lg">
-                        Enter Record Mode 
-                    </button>
-                    <p class="center">Recording Name:</p>
-                    <div>
-                        <input id="RecordNameTxt" type="text">
-                    </div>
-                    <button id="BeginRecordBtn" type="button" 
-                        class="btn btn-primary btn-lg">
-                        Start Recording						
-                    </button>
-                    <p id="RecordClock">
-                    </p>
-                </div>
-            </div>
-        </div>
+		<div role="tabpanel" class="tab-pane" id="recording">
+			<div class="spacer-div"></div>
+			<div class="record-groups">
+				<div class="col-md-4 record-pane">
+					<div class="spacer-div"></div>
+					<button id="RecordPrepBtn" type="button" class="btn btn-primary btn-lg">
+						Enter Record Mode
+					</button>
+					<div class="spacer-div"></div>
+					<h3>Recording Name:</h3>
+					<input id="RecordNameTxt" type="text">
+				</div>
+				<div class="col-md-4 record-pane">
+					<div class="spacer-div"></div>
+					<div class="spacer-div"></div>
+					<button id="BeginRecordBtn" type="button" class="btn btn-primary btn-lg">
+						Start Recording
+					</button>
+					<div class="btn-group">
+						<button id="playButton" type="button" class="btn btn-primary btn-lg record-option">&#9658;</button>
+						<!-- Two lower-case L's look like a pause symbol -->
+						<button id="pauseButton" type="button" class="btn btn-primary btn-lg record-option">l l</button>
+						<button id="stopButton" type="button" class="btn btn-primary btn-lg record-option">&#9632;</button>
+					</div>
+				</div>
+				<div class="col-md-4 record-pane">
+					<div style="height:110px"></div>
+					<p id="RecordClock"></p>
+				</div>
+			</div>
+		</div>
 		
         <div role="tabpanel" class="tab-pane" id="teleop">
                 <div>

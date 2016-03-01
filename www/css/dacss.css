@@ -24,6 +24,7 @@
     height: 120px;
 }
 .auto-option {
+	text-align: left;
 	height: 120px;
 	display: block;
 }
@@ -36,25 +37,23 @@
 }
 .selected-option {
 	color: white;
-	background-color:#006666;
+	background: linear-gradient(to right, #006666, #cc0066);
 }
 .btn-size {
     width: 100%;
     margin-top:10px;
 }
-
 .compass .windrose {
     position: absolute; 
     z-index: 1; 
 }
-
 .compass .arrow {
     position: absolute; 
     transform-origin: 50% 60%;
     z-index: 2;
 }
 .compass .display {
-    position: absolute; 
+    position: absolute;
     z-index: 2;
     top: 160px;
     left: 150px;
@@ -71,7 +70,8 @@
 	height: 100px;
 }
 .joystick {
-	border:5px double blue;
+	border:solid #006666;
+	border-radius: 5%;
 	height: 550px;
 }
 .joystick img {
@@ -84,6 +84,16 @@
 .joystick-spacer {
 	height: 40px;
 }
+.record-groups {
+	width:80%;
+	margin:0 auto;
+}
+.record-pane {
+	margin: 0 auto;
+	height:260px;
+	border: solid #006666;
+	border-radius: 10%;
+}
 .shooterarm {
 	position:absolute;
 	width:200px;
@@ -91,6 +101,11 @@
 	top:40px;
 	
 }
+.spacer-div {
+	width:100%;
+	height:30px;
+}
+
 #left_1_container {
 	position: absolute;
 	top:4%;
