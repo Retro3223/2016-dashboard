@@ -112,12 +112,12 @@ var frameR = new CameraFrame({
 });
 
 var frontCamera = new Camera({
-    url: "http://raspberrypi:5800/?action=snapshot",
+    url: "http://raspberrypi:5803/?action=snapshot",
     singleImage: false
 });
 
 var altCamera = new Camera({
-    url: "http://roborio-3223-frc:5801/?action=snapshot",
+    url: "http://raspberrypi:5800/?action=snapshot",
     singleImage: false
 });
 
