@@ -9,24 +9,30 @@ $(function() {
     $("#BeginRecordBtn").prop("disabled",'disabled');
     $("#RecordPrepBtn").click(function() {
         inRecordPrepState = !inRecordPrepState;
+        console.info("inRecordPrepState", inRecordPrepState);
         if(inRecordPrepState) {
             $("#RecordPrepBtn").text("Exit Record Mode");
             enableRecordButton();
             $("#recordingWarning").show();
             NetworkTables.putValue("/SmartDashboard/recordMode", true);
+            console.info("/SmartDashboard/recordMode", true);
         }else{
             $("#RecordPrepBtn").text("Enter Record Mode");
             $("#recordingWarning").hide();
             $("#BeginRecordBtn").prop("disabled",'disabled');
             NetworkTables.putValue("/SmartDashboard/recordMode", false);
+            console.info("/SmartDashboard/recordMode", false);
         }
     });
     $("#BeginRecordBtn").click(function() {
         recording = !recording;
+        console.info("recording", recording);
         if(recording) {
             var val = $("#RecordNameTxt").val();
             NetworkTables.putValue("/SmartDashboard/recordName", val);
+            console.info("/SmartDashboard/recordName", val);
             NetworkTables.putValue("/SmartDashboard/recording", true);
+            console.info("/SmartDashboard/recording", true);
             console.info("recording!");
             startTime = new Date();
             $("#BeginRecordBtn").text("Stop Recording");
@@ -71,10 +77,12 @@ function enableRecordButton() {
 function recordListener(key, value, isNew) {
     if(key === "/SmartDashboard/recordMode") {
         if(value == false && recording) {
+            console.info("stop recording!");
             stopRecording();
         }
         if(value == true && !recording) {
-            NetworkTables.putValue("/SmartDashboard/recordMode", false);
+            //console.info("hey we're not recording!");
+            //NetworkTables.putValue("/SmartDashboard/recordMode", false);
         }
     }
 }
