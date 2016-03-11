@@ -4,6 +4,18 @@ var param_specs = {
         defaultVal: 1,
         type: "double"
     },
+    rotate_proportional: {
+        defaultVal: 0.03,
+        type: "double"
+    },
+    rotate_derivative: {
+        defaultVal: 0.00,
+        type: "double"
+    },
+    rotate_integral: {
+        defaultVal: 0.00,
+        type: "double"
+    },
     arm_pitch_down_speed: {
         defaultVal: 0.25,
         type: "double"

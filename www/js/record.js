@@ -1,12 +1,12 @@
 
 var inRecordPrepState = false;
 var recording = false;
-var startTime = null;
 
 $(function() {
     NetworkTables.addGlobalListener(recordListener, true);
     $("#recordingWarning").hide();
-    $("#BeginRecordBtn").prop("disabled",'disabled');
+    //$("#BeginRecordBtn").prop("disabled",'disabled');
+    /*
     $("#RecordPrepBtn").click(function() {
         inRecordPrepState = !inRecordPrepState;
         console.info("inRecordPrepState", inRecordPrepState);
@@ -24,17 +24,12 @@ $(function() {
             console.info("/SmartDashboard/recordMode", false);
         }
     });
+    */
     $("#BeginRecordBtn").click(function() {
         recording = !recording;
         console.info("recording", recording);
         if(recording) {
-            var val = $("#RecordNameTxt").val();
-            NetworkTables.putValue("/SmartDashboard/recordName", val);
-            console.info("/SmartDashboard/recordName", val);
-            NetworkTables.putValue("/SmartDashboard/recording", true);
-            console.info("/SmartDashboard/recording", true);
             console.info("recording!");
-            startTime = new Date();
             $("#BeginRecordBtn").text("Stop Recording");
         }else{
             console.info("not recording!");
@@ -42,29 +37,31 @@ $(function() {
         }
     });
 
+    /*
     $("#RecordNameTxt").keyup(function() {
         enableRecordButton();
     });
+    */
 
-    setInterval(updateClock, 200);
+    //setInterval(sendRecordName, 1000);
 });
+
+function sendRecordName() {
+    if(inRecordPrepState) {
+        var val = $("#RecordNameTxt").val();
+        if(val != null && val.trim() != '') {
+            NetworkTables.putValue("/SmartDashboard/recordName", val);
+            console.info("/SmartDashboard/recordName", val);
+        }
+    }
+    console.info("/SmartDashboard/recording", recording);
+}
 
 function stopRecording() {
     $("#BeginRecordBtn").text("Start Recording");
 }
 
-function updateClock() {
-    if(recording) {
-        var offset = moment.duration(moment().diff(startTime));
-        var minutes = offset.get('minutes')+"";
-        var seconds = offset.get("seconds")+"";
-        if(seconds.length == 1) {
-            seconds = "0" + seconds;
-        }
-        $("#RecordClock").text(minutes + ":" + seconds);
-    }
-}
-
+/*
 function enableRecordButton() {
     var val = $("#RecordNameTxt").val();
     if(val.trim() !== '') {
@@ -73,16 +70,20 @@ function enableRecordButton() {
         $("#BeginRecordBtn").prop("disabled",'disabled');
     }
 }
+*/
 
 function recordListener(key, value, isNew) {
     if(key === "/SmartDashboard/recordMode") {
         if(value == false && recording) {
-            console.info("stop recording!");
-            stopRecording();
+            //console.info("stop recording!");
+            //stopRecording();
         }
         if(value == true && !recording) {
             //console.info("hey we're not recording!");
             //NetworkTables.putValue("/SmartDashboard/recordMode", false);
         }
+    }
+    if(key === '/SmartDashboard/recordStatus') {
+        $("#RecordClock").text(value);
     }
 }
