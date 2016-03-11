@@ -12,6 +12,8 @@
 
 .camera .signal {
     position: absolute;
+	width:500px;
+	height:auto;
 }
 
 .alt-camera {
