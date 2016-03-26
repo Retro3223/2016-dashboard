@@ -1,13 +1,13 @@
 .camera {
-    width: 320px;
-    height: 240px;
+    width: 500px;
+    height: 374px;
     margin: 10px;
     text-align: left;
 }
 
 .camera img {
-    width: 320px;
-    height: 240px;
+    width: 500px;
+    height: 374px;
 }
 
 .camera .signal {

@@ -57,7 +57,11 @@ CameraFrame.prototype.setCamera = function(camera) {
     this.clear();
     this.showStream();
     this.createImageLayer();
-}
+};
+
+CameraFrame.prototype.cycleCamera = function() {
+	this.setCamera(this.camera.nextCamera);
+};
 
 CameraFrame.prototype.createImageLayer = function() {
     var frame = this;
@@ -112,28 +116,36 @@ var frameR = new CameraFrame({
 });
 
 var frontCamera = new Camera({
-    url: "http://raspberrypi:5803/?action=snapshot",
-    singleImage: false
+    url: "http://raspberrypi.local:5803/?action=snapshot",
+    singleImage: false,
+	nextCamera: null
 });
 
 var altCamera = new Camera({
-    url: "http://raspberrypi:5800/?action=snapshot",
-    singleImage: false
+    url: "http://raspberrypi.local:5800/?action=snapshot",
+    singleImage: false,
+	nextCamera: null
 });
 
 var structureCamera = new Camera({
-    url: "http://raspberrypi:5802/?action=snapshot",
-    singleImage: false
+    url: "http://raspberrypi.local:5802/?action=snapshot",
+    singleImage: false,
+	nextCamera: null
 });
 
 var nullCamera = new Camera({
     url: "/img/indianfront.png?",
-    singleImage: true
+    singleImage: true,
+	nextCamera: null
 });
 
 var structureMode = 5;
 
 $(function() {
+	frontCamera.nextCamera = altCamera;
+	altCamera.nextCamera = structureCamera;
+	structureCamera.nextCamera = nullCamera;
+	nullCamera.nextCamera = frontCamera;
     frameL.setCamera(frontCamera);
     frameR.setCamera(altCamera);
     $("#rightStructureModeContainer").hide();
@@ -156,6 +168,16 @@ $(function() {
         }else{
             $("#rightStructureModeContainer").hide();
         }
+   });
+   
+   $("#webcam1_stream").click(function() {
+	   frameR.cycleCamera();
+	   syncCameraDropdown(frameR, $("#rightFrameCamera"));
+   });
+   $("#webcam0_stream").click(function() {
+	   frameL.cycleCamera();
+	   
+	   syncCameraDropdown(frameL, $("#leftFrameCamera"));
    });
    
    $("#leftFrameCamera").change(function(){
@@ -194,3 +216,14 @@ $(function() {
 });
 
 
+function syncCameraDropdown(cameraFrame, dropdown) {
+	if(cameraFrame.camera == frontCamera) {
+		dropdown.val("front");
+	}else if(cameraFrame.camera == altCamera) {
+		dropdown.val("back");
+	}else if(cameraFrame.camera == structureCamera) {
+		dropdown.val("structure");
+	}else if(cameraFrame.camera == nullCamera) {
+		dropdown.val("none");
+	}
+}

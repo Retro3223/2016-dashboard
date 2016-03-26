@@ -16,6 +16,18 @@ var param_specs = {
         defaultVal: 0.00,
         type: "double"
     },
+	raise_proportional: {
+        defaultVal: 0.03,
+        type: "double"
+    },
+    raise_derivative: {
+        defaultVal: 0.00,
+        type: "double"
+    },
+    raise_integral: {
+        defaultVal: 0.00,
+        type: "double"
+    },
     arm_pitch_down_speed: {
         defaultVal: 0.25,
         type: "double"
