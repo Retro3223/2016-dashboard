@@ -372,49 +372,7 @@
                         <input id="rotate_velocity" type="text"/>
                     </td>
                 </tr>
-				<tr>
-                    <td>Rotate kP:</td>
-                    <td>
-                        <input id="rotate_proportional" type="text"/>
-                    </td>
-                </tr>
-				<tr>
-                    <td>Rotate kD:</td>
-                    <td>
-                        <input id="rotate_derivativ	e" type="text"/>
-                    </td>
-                </tr>
-				<tr>
-                    <td>Rotate kI:</td>
-                    <td>
-                        <input id="rotate_integral" type="text"/>
-                    </td>
-                </tr>
-				<tr>
-                    <td>Raise kP:</td>
-                    <td>
-                        <input id="raise_proportional" type="text"/>
-                    </td>
-                </tr>
-				<tr>
-                    <td>Raise kD:</td>
-                    <td>
-                        <input id="raise_derivativ	e" type="text"/>
-                    </td>
-                </tr>
-				<tr>
-                    <td>Raise kI:</td>
-                    <td>
-                        <input id="raisee_integral" type="text"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Rotate mode:</td>
-                    <td>
-                        <input id="rotate_mode" type="text"/>
-                    </td>
-                </tr>
-            </table>
+			</table>
         </div>
         <div role="tabpanel" class="tab-pane" id="other">
             <div>
@@ -450,8 +408,25 @@
             </div>
             
             <table id="nt" class="table table-striped">
-                <tbody></tbody>
+                <tbody>
+					<p>Network</p>
+				</tbody>
             </table>
+			<table id="joystick_vars" class="table table-striped">
+				<tbody>
+					<p>Joystick</p>
+				</tbody>
+			</table>
+			<table id="sensor_vars" class="table table-striped">
+				<tbody>
+					<p>Sensor</p>
+				</tbody>
+			</table>
+			<table id="record_vars" class="table table-striped">
+				<tbody>
+					<p>Record</p>
+				</tbody>
+			</table>
         </div>
         <div role="tabpanel" class="tab-pane" id="joysticks">
 			<div id="stick_row" class="row">
@@ -612,7 +587,33 @@ function onNetworkTablesConnection(connected) {
 
 function onValueChanged(key, value, isNew) {
 	if (isNew) {
-		var tr = $('<tr></tr>').appendTo($('#nt > tbody:last'));
+		var table = '#nt > tbody:last';
+		
+		var joystickKeys = ["right_", "left_"];
+		
+		var sensorKeys = ["angle", "dangle", "yaw", "pitch", "roll", "accel_x", "accel_y", "accel_z", "velocity_x", "velocity_y", "velocity_z", "pos_x", "pos_y", "pos_z", "fused_heading", "shooter_pitch"];
+		
+		var recordKeys = ["recordMode", "recordName", "recording"];
+		
+		for (var i = 0; i < joystickKeys.length; i++) {
+			if (key === joystickKeys[i]) {
+				table = '#joystick_vars > tbody:last';
+			}
+		}
+		
+		for (var i = 0; i < sensorKeys.length; i++) {
+			if (key === sensorKeys[i]) {
+				table = '#sensor_vars > tbody:last';
+			}
+		}
+		
+		for (var i = 0; i < recordKeys.length; i++) {
+			if (key === recordKeys[i]) {
+				table = '#record_vars > tbody:last';
+			}
+		}
+		
+		var tr = $('<tr></tr>').appendTo($(table));
 		$('<td></td>').text(key).appendTo(tr);
 		$('<td></td>').attr('id', NetworkTables.keyToId(key))
 					   .text(value)
