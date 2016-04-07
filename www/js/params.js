@@ -16,7 +16,7 @@ var param_specs = {
         defaultVal: 0.00,
         type: "double"
     },
-	raise_proportional: {
+    raise_proportional: {
         defaultVal: 0.03,
         type: "double"
     },
@@ -36,7 +36,7 @@ var param_specs = {
         defaultVal: 0.25,
         type: "double"
     },
-    arm_roller_out_speed: { 
+    arm_roller_out_speed: {
         defaultVal: 0.25,
         type: "double"
     },
@@ -55,6 +55,14 @@ var param_specs = {
     rotate_mode: {
         defaultVal: "simple",
         type: "string"
+    },
+    shooter_pitch2: {
+        defaultVal: "45",
+        type: "double"
+    },
+    exit_velocity: {
+        defaultVal: "6200" // mm/s
+        type: "double"
     }
 };
 
